@@ -19,7 +19,7 @@ import {
 import { signIn } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useBoolean } from 'usehooks-ts';
+import { useBoolean, useUpdateEffect } from 'usehooks-ts';
 import { enqueueSnackbar } from 'notistack';
 
 export default function SignInPage({ searchParams }: TPage) {
@@ -34,16 +34,21 @@ export default function SignInPage({ searchParams }: TPage) {
       password: '',
     },
   });
+
   const { toggle: togglePasswordVisibility, value: isPasswordVisible } =
     useBoolean();
-  useEffect(() => {
+
+  useUpdateEffect(() => {
     if (searchParams.error === 'CredentialsSignin') {
       enqueueSnackbar({
         variant: 'error',
-        message: 'Неверные данные учетной записи',
+        message: <Typography>Неверные данные учетной записи</Typography>,
+        preventDuplicate: true,
+        key: 'auth_error',
       });
     }
   }, [searchParams]);
+
   return (
     <Box
       sx={{

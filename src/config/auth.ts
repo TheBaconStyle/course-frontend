@@ -14,25 +14,66 @@ export const AuthConfig: NextAuthOptions = {
           Accept: '*/*',
           'Content-Type': 'application/json',
         };
+
         const body = JSON.stringify({
           identifier: cred?.identifier,
           password: cred?.password,
         });
-        const method = 'POST';
-        const res = await fetch(process.env.API_URL + 'api/auth/local', {
-          method,
+
+        const authRes = await fetch(process.env.API_URL + 'api/auth/local', {
+          method: 'POST',
           body,
           headers,
         });
-        if (res.status !== 200) {
+
+        if (authRes.status !== 200) {
           return null;
         }
-        const userData = await res.json();
+
+        const authData = await authRes.json();
+
+        const accountRes = await fetch(
+          process.env.API_URL + 'api/users/me?populate=*',
+          {
+            method: 'GET',
+            headers: {
+              ...headers,
+              Authorization: `bearer ${authData.jwt}`,
+            },
+          },
+        );
+
+        if (accountRes.status !== 200) {
+          return null;
+        }
+
+        const accountData = await accountRes.json();
+
+        const roleType = accountData.role.type;
+
+        const personalRes = await fetch(
+          process.env.API_URL +
+            `api/${roleType}s?filters[account][id][$eq]=${authData.user.id}`,
+          {
+            method: 'GET',
+            headers: {
+              ...headers,
+              Authorization: `bearer ${process.env.API_KEY}`,
+            },
+          },
+        );
+
+        if (personalRes.status !== 200) {
+          return null;
+        }
+
+        const personalData = (await personalRes.json()).data[0];
+
         return {
-          jwt: userData.jwt,
-          email: userData.user.email,
-          name: userData.user.username,
-          id: String(userData.user.id),
+          jwt: authData.jwt,
+          email: authData.user.email,
+          name: `${personalData.surname} ${personalData.firstName} ${personalData.lastName}`,
+          id: String(accountData.id),
         };
       },
     }),
