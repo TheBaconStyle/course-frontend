@@ -1,8 +1,8 @@
 //@ts-check
 const nextConfig = {
   redirects: async () => {
-    return [{ source: '/', destination: '/auth/signin', statusCode: 301 }]
+    return [{ source: '/', destination: '/auth/signin', statusCode: 301 }];
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
