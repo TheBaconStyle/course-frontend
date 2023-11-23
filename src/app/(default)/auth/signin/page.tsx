@@ -1,7 +1,7 @@
 'use client';
 
 import { signInSchema } from '@/schema';
-import { TPage } from '@/types';
+import { TPage } from '../../../../types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AccountCircle,
@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form';
 import { useBoolean, useUpdateEffect } from 'usehooks-ts';
 import { enqueueSnackbar } from 'notistack';
 
-export default function SignInPage({ searchParams }: TPage) {
+export default function SignInPage({ searchParams, params }: TPage) {
   const {
     register,
     handleSubmit,
@@ -34,6 +34,8 @@ export default function SignInPage({ searchParams }: TPage) {
       password: '',
     },
   });
+
+  const callbackUrl = searchParams.callbackUrl as string;
 
   const { toggle: togglePasswordVisibility, value: isPasswordVisible } =
     useBoolean();
@@ -62,7 +64,10 @@ export default function SignInPage({ searchParams }: TPage) {
       <Box
         component={'form'}
         onSubmit={handleSubmit((data) =>
-          signIn('credentials', { ...data, callbackUrl: '/profile' }),
+          signIn('credentials', {
+            ...data,
+            callbackUrl: callbackUrl ?? '/profile',
+          }),
         )}
         sx={{
           width: '500px',

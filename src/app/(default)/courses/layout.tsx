@@ -9,5 +9,5 @@ export default async function CoursesLayout({ children }: PropsWithChildren) {
     return <>{children}</>;
   }
 
-  redirect('/');
+  redirect(`/`);
 }

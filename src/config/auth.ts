@@ -2,6 +2,25 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const AuthConfig: NextAuthOptions = {
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        session.user.jwt = token.jwt;
+        session.user.id = token.id;
+        session.user.type = token.type;
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.jwt = user.jwt;
+        token.type = user.type;
+      }
+
+      return token;
+    },
+  },
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -74,6 +93,7 @@ export const AuthConfig: NextAuthOptions = {
           email: authData.user.email,
           name: `${personalData.surname} ${personalData.firstName} ${personalData.lastName}`,
           id: String(accountData.id),
+          type: roleType,
         };
       },
     }),

@@ -15,14 +15,3 @@ export type TPage = {
   searchParams: Record<string, string | string[] | undefined>;
   params: Record<string, string>;
 };
-
-export interface User {
-  id: string;
-  jwt: string;
-  name: string;
-  email: string;
-}
-
-export interface Session {
-  user: User;
-}

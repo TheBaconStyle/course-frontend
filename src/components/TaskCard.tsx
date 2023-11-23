@@ -5,12 +5,23 @@ import { motion } from 'framer-motion';
 
 export type TTaskCard = {
   theme: string;
-  description?: string;
+  // description?: string;
   id: string;
-  img?: string;
+  courseId: string;
+  // img?: string;
+  mark?: string;
+  aviability?: string;
+  timeRestriction?: number;
 };
 
-export function TaskCard({ id, theme }: TTaskCard) {
+export function TaskCard({
+  id,
+  theme,
+  courseId,
+  aviability,
+  mark,
+  timeRestriction,
+}: TTaskCard) {
   return (
     <Card
       sx={{
@@ -23,7 +34,7 @@ export function TaskCard({ id, theme }: TTaskCard) {
       whileTap={{ scale: 0.98 }}
       draggable={false}
       component={motion(Link)}
-      href={`/tasks/${id}`}>
+      href={`/courses/${courseId}/tasks/${id}`}>
       <CardHeader title={theme} />
 
       <CardActions
@@ -33,9 +44,11 @@ export function TaskCard({ id, theme }: TTaskCard) {
           display: 'flex',
           '& *': { ml: '0px !important' },
         }}>
-        <Chip label="Оценка: отлично" />
-        <Chip label="Доступен до: 12.10.2023 10:00" />
-        <Chip label="Ограничение по времени: 15 мин" />
+        {mark && <Chip label={`Оценка: ${mark}`} />}
+        {aviability && <Chip label={`Доступен до: ${aviability}`} />}
+        {timeRestriction && (
+          <Chip label={`Ограничение по времени: ${timeRestriction} мин`} />
+        )}
       </CardActions>
     </Card>
   );

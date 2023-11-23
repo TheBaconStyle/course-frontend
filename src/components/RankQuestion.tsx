@@ -1,10 +1,10 @@
-import { TAnswer } from '../types'
+import { TAnswer } from '../types';
 
 export type TRankQuestion = {
-  text: string
-  answers: TAnswer[]
-}
+  text: string;
+  answers: TAnswer[];
+};
 
 export function RankQuestion() {
-  return <></>
+  return <></>;
 }

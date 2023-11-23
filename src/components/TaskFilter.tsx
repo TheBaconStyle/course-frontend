@@ -1,6 +1,6 @@
 'use client';
 
-import { TTaskStatus } from '@/types';
+import { TTaskStatus } from '../types';
 import { Tab, Tabs } from '@mui/material';
 import { useRouter } from 'next/navigation';
 

@@ -2,7 +2,6 @@ import { InitialColorSchemeScript, AppProviders } from '@/theme';
 import { Box, CssBaseline } from '@mui/material';
 import { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
-import { SnackbarProvider } from 'notistack';
 
 export const metadata: Metadata = {
   title: 'Next Course',

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Box,
@@ -6,18 +6,18 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from '@mui/material'
-import { useState } from 'react'
-import { TAnswer } from '../types'
+} from '@mui/material';
+import { useState } from 'react';
+import { TAnswer } from '../types';
 
 export type TSingleQuestion = {
-  id: string
-  answers: TAnswer[]
-  text: string
-}
+  id: string;
+  answers: TAnswer[];
+  text: string;
+};
 
 export function SingleQuestion({ answers, text }: TSingleQuestion) {
-  const [answer, setAnswer] = useState<string>('')
+  const [answer, setAnswer] = useState<string>('');
 
   return (
     <Box
@@ -26,8 +26,7 @@ export function SingleQuestion({ answers, text }: TSingleQuestion) {
         flexDirection: 'column',
         gap: '1rem',
         my: '1rem',
-      }}
-    >
+      }}>
       <Typography>{text}</Typography>
 
       <RadioGroup onChange={(_, value) => setAnswer(value)} value={answer}>
@@ -41,5 +40,5 @@ export function SingleQuestion({ answers, text }: TSingleQuestion) {
         ))}
       </RadioGroup>
     </Box>
-  )
+  );
 }

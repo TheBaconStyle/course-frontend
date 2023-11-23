@@ -1,4 +1,4 @@
-import { TPage } from '@/types';
+import { TPage } from '../../../../types';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { PropsWithChildren } from 'react';

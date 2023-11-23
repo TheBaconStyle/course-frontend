@@ -21,13 +21,13 @@ export function CourseCard({ id, name, image }: TCourseCard) {
         textDecoration: 'none',
       }}
       component={motion(Link)}
-      href={`/courses/${id}`}
+      href={`/courses/${id}/tasks`}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       draggable={false}>
-      <CardMedia component="div" sx={{ position: 'relative', height: '200px' }}>
+      <CardMedia sx={{ position: 'relative', height: '200px' }}>
         <Image
-          loader={({ src }) => `http://localhost:1337/uploads/${src}`}
+          loader={({ src }) => `/uploads/${src}`}
           src={image}
           alt="qwe"
           fill

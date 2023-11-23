@@ -1,0 +1,1 @@
+export { getAviableCourses } from './getAviableCourses';
