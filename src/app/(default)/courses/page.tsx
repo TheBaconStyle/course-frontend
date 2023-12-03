@@ -5,6 +5,7 @@ import { Box, Container, Typography } from '@mui/material';
 
 export default async function TasksPage({ searchParams }: TPage) {
   const courses = await getAviableCourses();
+
   return (
     <Container>
       <Typography variant="h5">Курсы:</Typography>

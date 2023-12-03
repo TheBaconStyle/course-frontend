@@ -1,8 +1,5 @@
 //@ts-check
 const nextConfig = {
-  async redirects() {
-    return [{ source: '/', destination: '/auth/signin', statusCode: 301 }];
-  },
   async rewrites() {
     return [
       {

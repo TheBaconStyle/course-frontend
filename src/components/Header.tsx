@@ -1,7 +1,7 @@
 'use client';
 
-import { AppBar, Box, Tab, Tabs, Toolbar, Typography } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { AppBar, Button, Toolbar, Typography } from '@mui/material';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeSwitch } from './ThemeSwitch';
@@ -13,8 +13,8 @@ export function Header() {
     <AppBar
       component="header"
       position="sticky"
-      sx={{ mb: '1rem', overflowX: 'hidden' }}>
-      <Toolbar>
+      sx={{ mb: '1rem', overflowX: 'hidden', userSelect: 'none' }}>
+      <Toolbar sx={{ gap: '1rem', alignItems: 'center' }}>
         <Typography
           component={Link}
           variant="h5"
@@ -22,31 +22,21 @@ export function Header() {
           sx={{
             color: 'inherit',
             textDecoration: 'none',
-            userSelect: 'none',
-          }}>
+          }}
+          draggable={false}>
           {Header.name}
         </Typography>
-        <Box sx={{ ml: 'auto' }}>
-          {status === 'authenticated' && (
-            <Tabs
-              value={pathname}
-              textColor="inherit"
-              TabIndicatorProps={{ sx: { bgcolor: 'white' } }}>
-              <Tab
-                label="Курсы"
-                value={pathname.startsWith('/courses') && pathname}
-                LinkComponent={Link}
-                href="/courses"
-              />
-              <Tab
-                label={data.user?.name}
-                value="/profile"
-                LinkComponent={Link}
-                href="/profile"
-              />
-            </Tabs>
-          )}
-        </Box>
+        <Typography sx={{ ml: 'auto' }}>{data?.user?.name}</Typography>
+        <Button
+          onClick={() =>
+            status === 'authenticated' && signOut({ callbackUrl: pathname })
+          }
+          sx={{
+            display: status !== 'authenticated' ? 'none' : 'initial',
+            color: 'inherit',
+          }}>
+          Выйти
+        </Button>
         <ThemeSwitch />
       </Toolbar>
     </AppBar>

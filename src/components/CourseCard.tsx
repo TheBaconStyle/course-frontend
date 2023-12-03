@@ -8,7 +8,7 @@ import Image from 'next/image';
 export type TCourseCard = {
   id: string;
   name: string;
-  image: string;
+  image: Record<string, string>;
 };
 
 export function CourseCard({ id, name, image }: TCourseCard) {
@@ -28,7 +28,7 @@ export function CourseCard({ id, name, image }: TCourseCard) {
       <CardMedia sx={{ position: 'relative', height: '200px' }}>
         <Image
           loader={({ src }) => `/uploads/${src}`}
-          src={image}
+          src={image.hash + image.ext}
           alt="qwe"
           fill
         />

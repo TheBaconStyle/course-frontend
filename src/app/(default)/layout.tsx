@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react';
 import { Footer, Header } from '@/components';
 import { Box } from '@mui/material';
+import { PropsWithChildren } from 'react';
 
-export default function BasicLayout({ children }: PropsWithChildren) {
+export default async function BasicLayout({ children }: PropsWithChildren) {
   return (
     <>
       <Header />

@@ -7,7 +7,7 @@ export type TTaskCard = {
   theme: string;
   // description?: string;
   id: string;
-  courseId: string;
+  course: string;
   // img?: string;
   mark?: string;
   aviability?: string;
@@ -17,7 +17,7 @@ export type TTaskCard = {
 export function TaskCard({
   id,
   theme,
-  courseId,
+  course,
   aviability,
   mark,
   timeRestriction,
@@ -34,7 +34,7 @@ export function TaskCard({
       whileTap={{ scale: 0.98 }}
       draggable={false}
       component={motion(Link)}
-      href={`/courses/${courseId}/tasks/${id}`}>
+      href={`/courses/${course}/tasks/${id}`}>
       <CardHeader title={theme} />
 
       <CardActions
