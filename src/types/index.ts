@@ -15,3 +15,9 @@ export type TPage = {
   searchParams: Record<string, string | string[] | undefined>;
   params: Record<string, string>;
 };
+
+export type JSONPrimitive = number | string | boolean | null;
+export type JSONArray = Array<JSONPrimitive | JSONObject | JSONArray>;
+export type JSONObject = {
+  [k: string]: JSONPrimitive | JSONObject | JSONArray;
+};

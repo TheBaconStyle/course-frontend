@@ -1,15 +1,23 @@
-'use client'
+'use client';
 
-import { Box, TextField, Typography } from '@mui/material'
-import { useState } from 'react'
+import { answerQuestion } from '@/actions/answerQuestion';
+import { Box, TextField, Typography, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'usehooks-ts';
 
 export type TFullTextQuestion = {
-  text: string
-  id: string
-}
+  questionVariant: any;
+};
 
-export function FullTextQuestion({ id, text }: TFullTextQuestion) {
-  const [answer, setAnswer] = useState<string>('')
+export function FullTextQuestion({ questionVariant }: TFullTextQuestion) {
+  const [answer, setAnswer] = useState<string>(questionVariant.answer);
+  const debouncedAnswer = useDebounce(answer, 500);
+
+  useEffect(() => {
+    if (questionVariant.answer !== debouncedAnswer) {
+      answerQuestion({ question: questionVariant.id, answer: debouncedAnswer });
+    }
+  }, [debouncedAnswer, questionVariant]);
 
   return (
     <Box
@@ -17,10 +25,8 @@ export function FullTextQuestion({ id, text }: TFullTextQuestion) {
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
-        my: '1rem',
-      }}
-    >
-      <Typography>{text}</Typography>
+      }}>
+      <Typography>{questionVariant.question.text}</Typography>
 
       <TextField
         label="Ответ"
@@ -28,6 +34,11 @@ export function FullTextQuestion({ id, text }: TFullTextQuestion) {
         value={answer}
         variant="filled"
       />
+
+      <Box>
+        <Button></Button>
+        <Button></Button>
+      </Box>
     </Box>
-  )
+  );
 }

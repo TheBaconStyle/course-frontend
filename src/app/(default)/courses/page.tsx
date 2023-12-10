@@ -1,10 +1,25 @@
-import { getAviableCourses } from '@/actions';
+import { getApiData } from '@/actions';
 import { CourseCard } from '@/components/CourseCard';
+import { AuthConfig } from '@/config';
 import { TPage } from '@/types';
 import { Box, Container, Typography } from '@mui/material';
+import { getServerSession } from 'next-auth';
 
 export default async function TasksPage({ searchParams }: TPage) {
-  const courses = await getAviableCourses();
+  const userData = await getServerSession(AuthConfig);
+  const { data: courses } = await getApiData({
+    path: 'api/courses',
+    query: {
+      filters: {
+        $or: [
+          { groups: { students: { account: { id: userData?.user.id } } } },
+          { teacher: { account: { id: userData?.user.id } } },
+        ],
+      },
+      populate: 'image',
+    },
+    options: { next: { revalidate: 5 } },
+  });
 
   return (
     <Container>

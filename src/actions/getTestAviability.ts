@@ -4,17 +4,34 @@ import { format } from 'date-fns';
 import { stringify } from 'qs';
 import { getServerSession } from 'next-auth';
 import { AuthConfig } from '@/config';
+import { getApiData } from '.';
 
-export async function getTestAviability(task_id: string) {
+type TGetTestAviabilityResult = {
+  aviable: boolean;
+  attempts: any[];
+  session: any;
+};
+
+export async function getTestAviability(
+  task_id: string,
+): Promise<TGetTestAviabilityResult> {
+  const result = { aviable: false, attempts: [], session: null };
   const userData = await getServerSession(AuthConfig);
   const user_id = userData?.user.id;
+
   if (!user_id) {
-    return false;
+    return result;
   }
+
   const currentDate = new Date();
   const dateString = format(currentDate, 'yyyy-MM-dd');
-  const query = stringify(
-    {
+
+  const {
+    data: { 0: sessionData },
+    meta: sessionMeta,
+  } = await getApiData({
+    path: 'api/sessions',
+    query: {
       filters: {
         start: { $lte: dateString },
         finish: { $gt: dateString },
@@ -27,17 +44,26 @@ export async function getTestAviability(task_id: string) {
         ],
       },
     },
-    { encode: false },
-  );
-
-  const res = await fetch(process.env.API_URL + `api/sessions?${query}`, {
-    headers: { Authorization: `bearer ${process.env.API_KEY}` },
-    cache: 'no-store',
+    options: { next: { tags: ['test_aviability_session'] } },
   });
 
-  const { meta } = await res.json();
+  const isTaskAviable = sessionMeta.pagination.total === 1;
 
-  const isTaskAviable = meta.pagination.total === 1;
+  if (isTaskAviable) {
+    result.aviable = isTaskAviable;
+    const { meta: attemptsMeta, data: attemptsData } = await getApiData({
+      path: 'api/attempts',
+      query: {
+        filters: {
+          student: { account: { id: userData?.user.id } },
+          session: { id: sessionData.id },
+        },
+      },
+      options: { next: { tags: ['test_aviability_attempts'] } },
+    });
+    result.session = sessionData;
+    result.attempts = attemptsData;
+  }
 
-  return isTaskAviable;
+  return result;
 }

@@ -1,11 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import { withAuth } from 'next-auth/middleware';
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const headers = new Headers(request.headers);
-  headers.set('x-pathname', pathname);
-  if (pathname !== '/') return withAuth(request);
-  return NextResponse.next({ request: { headers } });
-}
+const middleware = withAuth(
+  async function middleware(request) {
+    const { pathname } = request.nextUrl;
+    const headers = new Headers(request.headers);
+    headers.set('x-pathname', pathname);
+    return NextResponse.next({ request: { headers } });
+  },
+  {
+    pages: {
+      signIn: '/',
+    },
+  },
+);
+
+export { middleware };

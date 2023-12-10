@@ -1,8 +1,7 @@
-import { getTestAviability, getTestByID } from '@/actions';
+import { getApiData, getTestAviability } from '@/actions';
+import { AttemptStarter } from '@/components/AttemptStarter';
 import { TPage } from '@/types';
 import {
-  Box,
-  Button,
   Container,
   Divider,
   Paper,
@@ -17,13 +16,21 @@ import { notFound } from 'next/navigation';
 
 export default async function TaskPage({ params }: TPage) {
   const { task_id } = params;
-  const task = await getTestByID(task_id);
-  console.log(task);
+  const {
+    data: { 0: task },
+  } = await getApiData({
+    path: 'api/tests',
+    query: {
+      filters: { id: task_id },
+    },
+    options: { next: { tags: ['current_test'] } },
+  });
+
   if (!task) {
     notFound();
   }
 
-  const isTestAviable = await getTestAviability(task_id);
+  const { aviable, attempts, session } = await getTestAviability(task_id);
 
   return (
     <Container>
@@ -36,45 +43,51 @@ export default async function TaskPage({ params }: TPage) {
           <TableBody>
             <TableRow>
               <TableCell>Количество вопросов</TableCell>
-              <TableCell>{task.question_count}</TableCell>
+              <TableCell>
+                {aviable ? session.question_count : task.question_count}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Время на выполнение</TableCell>
-              <TableCell>{task.complete_time} мин</TableCell>
+              <TableCell>
+                {aviable ? session.complete_time : task.complete_time} мин
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Количество попыток</TableCell>
-              <TableCell>{task.attempt_count}</TableCell>
+              <TableCell>
+                {aviable ? session.attempt_count : task.attempt_count}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Удовлетворительно</TableCell>
-              <TableCell>{task.pass} правильных</TableCell>
+              <TableCell>
+                {aviable ? session.pass : task.pass} правильных
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Хорошо</TableCell>
-              <TableCell>{task.good} правильных</TableCell>
+              <TableCell>
+                {aviable ? session.good : task.good} правильных
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Отлично</TableCell>
-              <TableCell>{task.excellent} правильных</TableCell>
+              <TableCell>
+                {aviable ? session.excellent : task.excellent} правильных
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
       <Divider />
 
-      {isTestAviable && (
+      {aviable && (
         <>
-          <Box
-            sx={{
-              display: 'flex',
-              gap: '1rem',
-              alignItems: 'center',
-              my: '1rem',
-            }}>
-            <Typography>Доступно прохождение теста</Typography>
-            <Button variant="contained">Начать попытку</Button>
-          </Box>
+          <AttemptStarter
+            task={task_id}
+            attempts_remaining={session.attempt_count - attempts.length}
+          />
           <Divider />
         </>
       )}

@@ -7,11 +7,7 @@ export type GetApiDataOptions = {
   options?: RequestInit;
 };
 
-export async function getApiData<T = any>({
-  query,
-  path,
-  options,
-}: GetApiDataOptions) {
+export async function getApiData({ query, path, options }: GetApiDataOptions) {
   const requestQuery = stringify(query, { encode: false });
   const apiKey = process.env.API_KEY;
   const apiUrl = process.env.API_URL;

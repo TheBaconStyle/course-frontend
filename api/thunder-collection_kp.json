@@ -1,0 +1,281 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "kp",
+    "dateExported": "2023-12-03T21:54:08.278Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "8ab25426-9416-4a72-9d3d-a9d521e68055",
+            "name": "tests",
+            "containerId": "",
+            "created": "2023-11-11T13:24:35.477Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "4b42d0a8-8716-4b5c-856b-41b40d3cf4b1",
+            "name": "attempts",
+            "containerId": "",
+            "created": "2023-11-14T16:30:30.458Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "52e73c44-12cd-43fd-bb68-eab8cf5f7632",
+            "name": "auth",
+            "containerId": "",
+            "created": "2023-11-14T18:22:09.911Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "51c5354f-373e-4671-8742-c3779f7ac27e",
+            "name": "students",
+            "containerId": "",
+            "created": "2023-11-14T18:25:24.205Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "005fa650-20e7-43bc-9457-179147737e6b",
+            "name": "courses",
+            "containerId": "",
+            "created": "2023-11-20T16:28:29.503Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "3f9757b7-cdbf-49a8-a606-11dc1da92f5b",
+            "name": "sessions",
+            "containerId": "",
+            "created": "2023-11-28T11:15:00.465Z",
+            "sortNum": 70000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "2e52171d-1a74-409f-861b-28a4ef37fd55",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "8ab25426-9416-4a72-9d3d-a9d521e68055",
+            "name": "current",
+            "url": "http://localhost:1337/api/tests?populate=*&filters[course][id]=1",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-11-11T13:24:45.413Z",
+            "modified": "2023-12-03T18:17:10.157Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "populate",
+                    "value": "*",
+                    "isPath": false
+                },
+                {
+                    "name": "filters[course][id]",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "fields[0]",
+                    "value": "id",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "fields[1]",
+                    "value": "theme",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "filters[id]",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "284484890e1c2cbc337173f892f16601c5c9bbb1be6b5714feb1da995ab65e127eaa0d94a351e0fda02f03bdcbf56d9dca57d1f91c90119cf38bfae2c6dc9b839e449913af4c851b612222d49f5874fbcdc287361e7ca52a88fc663673cf339fc219ef5cd07c75fd5452c26190768a3fcdd8585f702bf9c2c3399606f360dc6c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "843dc158-3e7b-4a3e-97f3-914e492f2f5c",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "4b42d0a8-8716-4b5c-856b-41b40d3cf4b1",
+            "name": "new",
+            "url": "http://localhost:1337/api/attempts/new",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-11-14T16:30:35.402Z",
+            "modified": "2023-12-01T17:40:20.338Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"data\":{\n    \"test\":1\n  }\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxNDUxMDkzLCJleHAiOjE3MDQwNDMwOTN9.RF-_sNexwgIDzRfo5W-qrp-GoC8G56pLOcXPoHUYnKs"
+            },
+            "tests": []
+        },
+        {
+            "_id": "adfc8201-e076-4954-81af-af2fcb7ea11d",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "52e73c44-12cd-43fd-bb68-eab8cf5f7632",
+            "name": "login",
+            "url": "http://localhost:1337/api/auth/local",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-11-14T18:22:18.479Z",
+            "modified": "2023-11-18T14:33:59.412Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "populate",
+                    "value": "role",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"identifier\":\"qwe1@qwe.qwe\",\n  \"password\":\"qwerty123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c598a154-f800-4e5d-bc0b-6f8023e0817d",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "52e73c44-12cd-43fd-bb68-eab8cf5f7632",
+            "name": "me",
+            "url": "http://localhost:1337/api/users/me?populate=*",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-11-14T18:23:08.126Z",
+            "modified": "2023-11-18T14:34:07.798Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "populate",
+                    "value": "*",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAwMzE4MDM5LCJleHAiOjE3MDI5MTAwMzl9.0wVDgc0mwrXqZztWFBfUpfZvW2AFcWltI3h1sOB7_lA"
+            },
+            "tests": []
+        },
+        {
+            "_id": "71cc6a2a-8e18-4fdd-8e1e-df7cf99cb1a3",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "51c5354f-373e-4671-8742-c3779f7ac27e",
+            "name": "get",
+            "url": "http://127.0.0.1:1337/api/students?filters[account][id][$eq]=1",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-11-14T18:36:19.941Z",
+            "modified": "2023-11-23T13:01:18.268Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "filters[account][id][$eq]",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "2c2276f3820bdc11a9c08b431784ace04868b18fef1d243946458c79f9aff32ddb775b92068f1cb605b347d481dd836d428dfe85eb279b28f7742d3f38bd11be94897859b1898191782619f3cbef24a6d7ba7d538cd6375bf85d9f3b2663b301391e132cf4b9c1b6f090c32ce7231b1ca8028720221775fc6c8d432af5bfc0f9"
+            },
+            "tests": []
+        },
+        {
+            "_id": "2dc1fa86-c638-4fe3-bdb9-2f3a1618b521",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "005fa650-20e7-43bc-9457-179147737e6b",
+            "name": "current",
+            "url": "http://127.0.0.1:1337/api/courses?populate=image&filters[groups][students][account][id]=1",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-11-20T16:28:37.807Z",
+            "modified": "2023-12-03T16:14:50.808Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "populate",
+                    "value": "image",
+                    "isPath": false
+                },
+                {
+                    "name": "filters[groups][students][account][id]",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "284484890e1c2cbc337173f892f16601c5c9bbb1be6b5714feb1da995ab65e127eaa0d94a351e0fda02f03bdcbf56d9dca57d1f91c90119cf38bfae2c6dc9b839e449913af4c851b612222d49f5874fbcdc287361e7ca52a88fc663673cf339fc219ef5cd07c75fd5452c26190768a3fcdd8585f702bf9c2c3399606f360dc6c"
+            },
+            "tests": []
+        },
+        {
+            "_id": "93f30f78-9b29-4808-b8e7-2ca6315b7502",
+            "colId": "39d9b704-a275-4182-8f92-25d932bf77d5",
+            "containerId": "3f9757b7-cdbf-49a8-a606-11dc1da92f5b",
+            "name": "getAviablility",
+            "url": "http://localhost:1337/api/sessions?filters[start][$lte]=2023-12-03&filters[finish][$gt]=2023-12-03&filters[test][id]=1&filters[$or][0][students][account][id]=1&filters[$or][1][groups][students][account][id]=1",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2023-11-28T11:15:13.457Z",
+            "modified": "2023-12-03T15:55:31.537Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "filters[groups][id]",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "populate[0]",
+                    "value": "test.questions",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "filters[start][$lte]",
+                    "value": "2023-12-03",
+                    "isPath": false
+                },
+                {
+                    "name": "filters[finish][$gt]",
+                    "value": "2023-12-03",
+                    "isPath": false
+                },
+                {
+                    "name": "filters[test][id]",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "filters[$or][0][students][account][id]",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "filters[$or][1][groups][students][account][id]",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "284484890e1c2cbc337173f892f16601c5c9bbb1be6b5714feb1da995ab65e127eaa0d94a351e0fda02f03bdcbf56d9dca57d1f91c90119cf38bfae2c6dc9b839e449913af4c851b612222d49f5874fbcdc287361e7ca52a88fc663673cf339fc219ef5cd07c75fd5452c26190768a3fcdd8585f702bf9c2c3399606f360dc6c"
+            },
+            "tests": []
+        }
+    ]
+}

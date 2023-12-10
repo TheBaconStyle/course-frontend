@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { TAnswer } from '../types';
+import { useEffect, useState } from 'react';
+import { answerQuestion } from '@/actions';
 import {
   Box,
   Checkbox,
@@ -9,15 +9,30 @@ import {
   FormGroup,
   Typography,
 } from '@mui/material';
+import { useDebounce } from 'usehooks-ts';
 
 export type TMultipleQuestion = {
-  id: string;
-  text: string;
-  answers: TAnswer[];
+  questionVariant: any;
 };
 
-export function MultipleQuestion({ id, text, answers }: TMultipleQuestion) {
-  const [answer, setAnswer] = useState<string[]>([]);
+export function MultipleQuestion({ questionVariant }: TMultipleQuestion) {
+  const [answer, setAnswer] = useState<string[]>(questionVariant.answer ?? []);
+  const debouncedAnswer = useDebounce(answer, 500);
+
+  useEffect(() => {
+    const hasAnswer = Array.isArray(questionVariant.answer);
+    const eqLength =
+      hasAnswer && debouncedAnswer.length === questionVariant.answer.length;
+    const eqItems =
+      hasAnswer &&
+      (questionVariant.answer as string[]).every((variant) =>
+        debouncedAnswer.includes(variant),
+      );
+    if (!eqLength || !eqItems) {
+      answerQuestion({ question: questionVariant.id, answer: debouncedAnswer });
+    }
+  }, [questionVariant, debouncedAnswer]);
+
   return (
     <Box
       sx={{
@@ -26,20 +41,19 @@ export function MultipleQuestion({ id, text, answers }: TMultipleQuestion) {
         gap: '1rem',
         my: '1rem',
       }}>
-      <Typography>{text}</Typography>
-
+      <Typography>{questionVariant.question.text}</Typography>
       <FormGroup>
-        {answers.map((item) => (
+        {questionVariant.variants.map((variant: string) => (
           <FormControlLabel
-            key={item.id}
+            key={variant}
             control={<Checkbox />}
-            label={item.value}
-            value={item.id}
-            checked={answer.includes(item.id)}
+            label={variant}
+            value={variant}
+            checked={answer.includes(variant)}
             onChange={(_, checked) => {
               const newAnsw = new Set(answer);
-              if (checked) newAnsw.add(item.id);
-              if (!checked) newAnsw.delete(item.id);
+              if (checked) newAnsw.add(variant);
+              if (!checked) newAnsw.delete(variant);
               setAnswer(Array.from(newAnsw));
             }}
           />

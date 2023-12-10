@@ -1,44 +1,54 @@
 'use client';
 
+import { answerQuestion } from '@/actions';
 import {
   Box,
+  Button,
   FormControlLabel,
   Radio,
   RadioGroup,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import { TAnswer } from '../types';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'usehooks-ts';
 
 export type TSingleQuestion = {
-  id: string;
-  answers: TAnswer[];
-  text: string;
+  questionVariant: any;
 };
 
-export function SingleQuestion({ answers, text }: TSingleQuestion) {
-  const [answer, setAnswer] = useState<string>('');
+export function SingleQuestion({ questionVariant }: TSingleQuestion) {
+  const [answer, setAnswer] = useState<string>(questionVariant.answer);
+  const debouncedAnswer = useDebounce(answer, 500);
 
+  useEffect(() => {
+    if (questionVariant.answer !== debouncedAnswer) {
+      answerQuestion({ question: questionVariant.id, answer: debouncedAnswer });
+    }
+  }, [debouncedAnswer, questionVariant]);
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
-        my: '1rem',
       }}>
-      <Typography>{text}</Typography>
+      <Typography>{questionVariant.question.text}</Typography>
 
       <RadioGroup onChange={(_, value) => setAnswer(value)} value={answer}>
-        {answers.map((item) => (
+        {questionVariant.variants.map((item: string) => (
           <FormControlLabel
-            key={item.id}
+            key={item}
             control={<Radio />}
-            label={item.value}
-            value={item.id}
+            label={item}
+            value={item}
           />
         ))}
       </RadioGroup>
+
+      <Box>
+        <Button></Button>
+        <Button></Button>
+      </Box>
     </Box>
   );
 }

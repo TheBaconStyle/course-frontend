@@ -1,12 +1,17 @@
-import { getCourseTests } from '@/actions';
+import { getApiData } from '@/actions';
 import { TaskCard } from '@/components';
 import { TPage } from '@/types';
 import { Box, Container, Typography } from '@mui/material';
-import { stringify } from 'qs';
 
 export default async function TasksPage({ params }: TPage) {
   const course_id = params.course_id as string;
-  const tests = await getCourseTests(course_id);
+  const { data: tests } = await getApiData({
+    path: 'api/tests',
+    query: {
+      filters: { course: { id: course_id } },
+      fields: ['id', 'theme'],
+    },
+  });
 
   return (
     <Container>

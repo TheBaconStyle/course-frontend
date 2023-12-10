@@ -1,14 +1,13 @@
-'use client';
-
-import { AppBar, Button, Toolbar, Typography } from '@mui/material';
-import { signOut, useSession } from 'next-auth/react';
+import { AuthConfig } from '@/config';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { PersonalInfo } from './PersonalInfo';
 import { ThemeSwitch } from './ThemeSwitch';
 
-export function Header() {
-  const pathname = usePathname();
-  const { data, status } = useSession();
+export async function Header() {
+  const data = await getServerSession(AuthConfig);
+
   return (
     <AppBar
       component="header"
@@ -18,25 +17,15 @@ export function Header() {
         <Typography
           component={Link}
           variant="h5"
-          href="/"
+          href={data ? '/courses' : '/'}
           sx={{
             color: 'inherit',
             textDecoration: 'none',
           }}
           draggable={false}>
-          {Header.name}
+          Викторина
         </Typography>
-        <Typography sx={{ ml: 'auto' }}>{data?.user?.name}</Typography>
-        <Button
-          onClick={() =>
-            status === 'authenticated' && signOut({ callbackUrl: pathname })
-          }
-          sx={{
-            display: status !== 'authenticated' ? 'none' : 'initial',
-            color: 'inherit',
-          }}>
-          Выйти
-        </Button>
+        <PersonalInfo userData={data} />
         <ThemeSwitch />
       </Toolbar>
     </AppBar>
