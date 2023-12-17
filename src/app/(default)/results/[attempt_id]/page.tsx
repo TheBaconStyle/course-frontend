@@ -1,4 +1,5 @@
-import { getApiData, putApiData } from '@/actions';
+import { getApiData } from '@/actions';
+import { completeAttempt } from '@/actions/completeAttempt';
 import { AuthConfig } from '@/config';
 import { TPage } from '@/types';
 import { Container } from '@mui/material';
@@ -27,12 +28,26 @@ export default async function ResultsPage({ params }: TPage) {
     redirect(`/courses`);
   }
 
-  if (!currentAttempt.closed) {
-    await putApiData({
-      path: `api/attempts/${currentAttempt.id}`,
-      data: { closed: true },
-    });
+  if (!currentAttempt.completed) {
+    await completeAttempt({ attempt: currentAttempt.id });
   }
 
-  return <Container>results</Container>;
+  const questionVariants = currentAttempt.question_variants;
+
+  if (Array.isArray(questionVariants)) {
+    const rightVariants = questionVariants.reduce((acc: number, variant) => {
+      const questionType = variant.question.type;
+      const isSimpleQuestion = questionType === 'rank';
+      const isMultipleQuestion = questionType === 'multiple';
+      const isSingleQuestion = questionType === 'single';
+      const isFulltextQuestion = questionType === 'fulltext';
+    }, 0);
+  }
+
+  return (
+    <Container>
+      <>{JSON.stringify(currentAttempt)}</>
+      {}
+    </Container>
+  );
 }

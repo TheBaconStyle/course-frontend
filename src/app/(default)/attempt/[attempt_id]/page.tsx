@@ -41,7 +41,7 @@ export default async function AttemptPage({ params, searchParams }: TPage) {
   const questions = currentAttempt.question_variants;
   const current_task = questions[question_index - 1];
 
-  if (currentMoment > expireDate || currentAttempt.closed) {
+  if (currentMoment > expireDate || currentAttempt.completed) {
     redirect(`/results/${attempt_id}`);
   }
 

@@ -1,7 +1,6 @@
 'use server';
 
 import { format } from 'date-fns';
-import { stringify } from 'qs';
 import { getServerSession } from 'next-auth';
 import { AuthConfig } from '@/config';
 import { getApiData } from '.';
@@ -51,7 +50,7 @@ export async function getTestAviability(
 
   if (isTaskAviable) {
     result.aviable = isTaskAviable;
-    const { meta: attemptsMeta, data: attemptsData } = await getApiData({
+    const { data: attemptsData } = await getApiData({
       path: 'api/attempts',
       query: {
         filters: {

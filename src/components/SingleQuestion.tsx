@@ -25,6 +25,7 @@ export function SingleQuestion({ questionVariant }: TSingleQuestion) {
       answerQuestion({ question: questionVariant.id, answer: debouncedAnswer });
     }
   }, [debouncedAnswer, questionVariant]);
+
   return (
     <Box
       sx={{

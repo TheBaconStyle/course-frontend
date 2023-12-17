@@ -9,10 +9,14 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
   TableRow,
   Typography,
 } from '@mui/material';
+import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
+import { Button } from '@mui/material';
+import Link from 'next/link';
 
 export default async function TaskPage({ params }: TPage) {
   const { task_id } = params;
@@ -80,15 +84,49 @@ export default async function TaskPage({ params }: TPage) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Divider />
 
       {aviable && (
         <>
+          <Divider />
           <AttemptStarter
             task={task_id}
             attempts_remaining={session.attempt_count - attempts.length}
           />
+        </>
+      )}
+      {attempts.length !== 0 && (
+        <>
           <Divider />
+          <Typography sx={{ my: '1rem' }}>Предыдущие попытки:</Typography>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Дата / Время</TableCell>
+                <TableCell>Результат</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {attempts.map((attempt) => {
+                return (
+                  <TableRow key={attempt.id}>
+                    <TableCell>
+                      {format(
+                        new Date(attempt.createdAt),
+                        'dd.MM.yyyy / HH:mm:ss',
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        LinkComponent={Link}
+                        href={`/results/${attempt.id}`}>
+                        Перейти
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
         </>
       )}
     </Container>

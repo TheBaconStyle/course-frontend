@@ -102,11 +102,12 @@ export async function startNewAttempt({
   for (let index = 0; index < attemptVariant.length; index++) {
     const question = attemptVariant[index];
     const hasVariants = question.type !== 'fulltext';
+    const isRankQuestion = question.type === 'rank';
     const shuffledVariants = hasVariants ? shuffle(question.variants) : null;
     const data = {
       question: question.id,
-      variants: shuffledVariants,
-      // sequence_index: index + 1,
+      variants: isRankQuestion ? null : shuffledVariants,
+      answer: isRankQuestion ? shuffledVariants : null,
     };
 
     const { data: sequenced_question } = await postApiData({

@@ -15,7 +15,6 @@ export function QuestionPagination({
   const router = useRouter();
   return (
     <Pagination
-      itemType=""
       count={question_count}
       page={current_question}
       onChange={(_, p) => {
