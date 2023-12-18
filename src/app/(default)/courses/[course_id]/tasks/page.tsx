@@ -1,7 +1,9 @@
 import { getApiData } from '@/actions';
 import { TaskCard } from '@/components';
 import { TPage } from '@/types';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography, Button } from '@mui/material';
+import { ArrowLeft } from '@mui/icons-material';
+import Link from 'next/link';
 
 export default async function TasksPage({ params }: TPage) {
   const course_id = params.course_id as string;
@@ -15,7 +17,12 @@ export default async function TasksPage({ params }: TPage) {
 
   return (
     <Container>
-      <Typography variant="h5">Тесты:</Typography>
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Button LinkComponent={Link} href={`/courses`}>
+          <ArrowLeft /> Назад к курсам
+        </Button>
+        <Typography variant="h5">Тесты:</Typography>
+      </Box>
       <Box
         sx={{
           mt: '2rem',

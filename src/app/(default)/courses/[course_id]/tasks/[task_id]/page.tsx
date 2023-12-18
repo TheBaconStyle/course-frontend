@@ -2,6 +2,7 @@ import { getApiData, getTestAviability } from '@/actions';
 import { AttemptStarter } from '@/components/AttemptStarter';
 import { TPage } from '@/types';
 import {
+  Box,
   Container,
   Divider,
   Paper,
@@ -17,6 +18,7 @@ import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { Button } from '@mui/material';
 import Link from 'next/link';
+import { ArrowLeft } from '@mui/icons-material';
 
 export default async function TaskPage({ params }: TPage) {
   const { task_id } = params;
@@ -26,6 +28,7 @@ export default async function TaskPage({ params }: TPage) {
     path: 'api/tests',
     query: {
       filters: { id: task_id },
+      populate: ['course'],
     },
     options: { next: { tags: ['current_test'] } },
   });
@@ -38,9 +41,13 @@ export default async function TaskPage({ params }: TPage) {
 
   return (
     <Container>
-      <Typography variant="h5" sx={{ mb: '1rem' }}>
-        Тест по теме: {task.theme}
-      </Typography>
+      <Box
+        sx={{ display: 'flex', gap: '1rem', alignItems: 'center', mb: '1rem' }}>
+        <Button LinkComponent={Link} href={`/courses/${task.course.id}/tasks`}>
+          <ArrowLeft /> Назад к курсу
+        </Button>
+        <Typography variant="h5">Тест по теме: {task.theme}</Typography>
+      </Box>
       <Divider />
       <TableContainer component={Paper} sx={{ my: '1rem' }}>
         <Table>

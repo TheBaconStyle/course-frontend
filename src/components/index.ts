@@ -14,3 +14,4 @@ export * from './QuestionPagination';
 export * from './RankQuestion';
 export * from './ReloadButton';
 export * from './SignInForm';
+export * from './CompleteAttemptButton';

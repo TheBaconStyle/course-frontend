@@ -1,15 +1,16 @@
 import { getApiData } from '@/actions';
 import {
+  CompleteAttemptButton,
   FullTextQuestion,
   MultipleQuestion,
+  RankQuestion,
   SingleQuestion,
   TaskTimer,
 } from '@/components';
 import { QuestionPagination } from '@/components/QuestionPagination';
-import { RankQuestion } from '@/components/RankQuestion';
 import { AuthConfig } from '@/config';
 import { TPage } from '@/types';
-import { Container, Typography } from '@mui/material';
+import { Container, Divider, Typography } from '@mui/material';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
@@ -51,6 +52,7 @@ export default async function AttemptPage({ params, searchParams }: TPage) {
         Тест по теме: {currentAttempt.session.test.theme}
       </Typography>
       <TaskTimer to={expireDate} from={currentMoment} />
+      <Divider />
       <QuestionPagination
         current_question={question_index}
         question_count={currentAttempt.session.test.question_count}
@@ -71,6 +73,8 @@ export default async function AttemptPage({ params, searchParams }: TPage) {
       {current_task.question.type === 'rank' && (
         <RankQuestion questionVariant={current_task} />
       )}
+      <Divider />
+      <CompleteAttemptButton attempt={currentAttempt.id} />
     </Container>
   );
 }

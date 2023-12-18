@@ -110,7 +110,8 @@ export function SignInForm({}: TSignInForm) {
               endAdornment: (
                 <InputAdornment
                   position="end"
-                  onClick={togglePasswordVisibility}>
+                  onClick={togglePasswordVisibility}
+                  sx={{ cursor: 'pointer' }}>
                   {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
                 </InputAdornment>
               ),
