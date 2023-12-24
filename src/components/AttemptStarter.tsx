@@ -2,8 +2,9 @@
 
 import { revalidate, startNewAttempt } from '@/actions';
 import { Box, Button, Typography } from '@mui/material';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { enqueueSnackbar } from 'notistack';
+import { useBoolean } from 'usehooks-ts';
 
 export type TAttemptStarter = {
   task: string;
@@ -12,9 +13,7 @@ export type TAttemptStarter = {
 
 export function AttemptStarter({ task, attempts_remaining }: TAttemptStarter) {
   const router = useRouter();
-  const params = useParams();
-  const course_id = params.course_id;
-  const task_id = params.task_id;
+  const { value: isLocked, setTrue: lock } = useBoolean(false);
   return (
     <Box
       sx={{
@@ -28,8 +27,9 @@ export function AttemptStarter({ task, attempts_remaining }: TAttemptStarter) {
       </Typography>
       <Button
         variant="contained"
-        disabled={attempts_remaining === 0}
+        disabled={attempts_remaining === 0 || isLocked}
         onClick={async () => {
+          lock();
           const { attempt, error, message } = await startNewAttempt({
             task_id: task,
           });

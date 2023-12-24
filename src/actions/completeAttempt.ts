@@ -1,5 +1,6 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { putApiData, revalidate } from '.';
 
 export type CompleteAttemptOptions = {

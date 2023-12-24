@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const AuthConfig: NextAuthOptions = {
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       if (token) {
         session.user.jwt = token.jwt;
         session.user.id = token.id;
@@ -11,7 +11,7 @@ export const AuthConfig: NextAuthOptions = {
       }
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user }: any) {
       if (user) {
         token.id = user.id;
         token.jwt = user.jwt;

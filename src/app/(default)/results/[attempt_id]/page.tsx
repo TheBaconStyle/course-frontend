@@ -19,7 +19,7 @@ export default async function ResultsPage({ params }: TPage) {
     query: {
       filters: {
         id: attempt_id,
-        student: { id: data?.user.id },
+        student: { account: { id: data?.user.id } },
       },
       populate: ['session.test.course', 'question_variants.question'],
     },
@@ -52,7 +52,7 @@ export default async function ResultsPage({ params }: TPage) {
         String(userAnswer).toLowerCase() === String(rightAnswer).toLowerCase();
     }
 
-    if (isRankQuestion || isMultipleQuestion) {
+    if (isRankQuestion || (isMultipleQuestion && Array.isArray(userAnswer))) {
       const answers = Array.from<string>(userAnswer);
       const rightAnswers = Array.from<string>(rightAnswer);
       if (answers.length === rightAnswers.length) {

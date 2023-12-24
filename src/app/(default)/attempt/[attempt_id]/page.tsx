@@ -10,8 +10,9 @@ import {
 import { QuestionPagination } from '@/components/QuestionPagination';
 import { AuthConfig } from '@/config';
 import { TPage } from '@/types';
-import { Container, Divider, Typography } from '@mui/material';
+import { Container, Divider, Typography, Button } from '@mui/material';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function AttemptPage({ params, searchParams }: TPage) {
@@ -26,7 +27,7 @@ export default async function AttemptPage({ params, searchParams }: TPage) {
     query: {
       filters: {
         id: attempt_id,
-        student: { id: data?.user.id },
+        student: { account: { id: data?.user.id } },
       },
       populate: ['session.test', 'question_variants.question', 'test.course'],
     },
@@ -74,7 +75,9 @@ export default async function AttemptPage({ params, searchParams }: TPage) {
         <RankQuestion questionVariant={current_task} />
       )}
       <Divider />
-      <CompleteAttemptButton attempt={currentAttempt.id} />
+      <Button LinkComponent={Link} href={`/results/${currentAttempt.id}`}>
+        Закончить попытку
+      </Button>
     </Container>
   );
 }
