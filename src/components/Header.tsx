@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { PersonalInfo } from './PersonalInfo';
 import { ThemeSwitch } from './ThemeSwitch';
+import { HelpButton } from './HelpButton';
 
 export async function Header() {
   const data = await getServerSession(AuthConfig);
@@ -21,10 +22,12 @@ export async function Header() {
           sx={{
             color: 'inherit',
             textDecoration: 'none',
+            mr: 'auto',
           }}
           draggable={false}>
           Викторина
         </Typography>
+        {data && <HelpButton />}
         <PersonalInfo userData={data} />
         <ThemeSwitch />
       </Toolbar>

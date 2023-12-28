@@ -1,4 +1,4 @@
-import { Footer, Header } from '@/components';
+import { Footer, Header, JoyrideProvider } from '@/components';
 import { Box } from '@mui/material';
 import { PropsWithChildren } from 'react';
 

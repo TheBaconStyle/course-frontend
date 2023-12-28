@@ -11,7 +11,7 @@ export type TPersonalInfo = {
 export function PersonalInfo({ userData }: TPersonalInfo) {
   return (
     <>
-      <Typography sx={{ ml: 'auto' }}>{userData?.user.name}</Typography>
+      <Typography>{userData?.user.name}</Typography>
       <Button
         onClick={() => userData && signOut()}
         sx={{

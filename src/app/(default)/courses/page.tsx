@@ -22,7 +22,7 @@ export default async function TasksPage({ searchParams }: TPage) {
   });
 
   return (
-    <Container>
+    <Container id="courses">
       <Typography variant="h5">Курсы:</Typography>
       <Box
         sx={{
